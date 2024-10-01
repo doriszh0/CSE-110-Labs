@@ -1,9 +1,9 @@
 #Section1 {
     background-color: rgb(245, 240, 230);
-    margin-top: 80px;
+    margin-top: 170px;
     display: inline-block;
     width: 100%;
-    scroll-margin-top: 80px;
+    scroll-margin-top: 170px;
 }
 
 h2 {
@@ -111,8 +111,8 @@ li a:hover {
     max-height: 500px;
   }
 
-  @media screen and (max-width: 800px) {
-    .anchorlink {
+  @media only screen and (max-width: 800px) {
+    .anchorlink li {
         display: none;
     }
     
