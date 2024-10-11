@@ -22,6 +22,7 @@ function App() {
    label: Label.other,
   };
   const [createNote, setCreateNote] = useState(initialNote);
+  const [oldTitle, setOldTitle] = useState("");
 
   const createNoteHandler = (event: React.FormEvent) => {
     event.preventDefault();
@@ -35,7 +36,14 @@ function App() {
   const [selectedNote, setSelectedNote] = useState<Note>(initialNote)
 
   const editTitleHandler = (event: React.FormEvent<HTMLHeadingElement>) => {
-    selectedNote.title = event.currentTarget.innerHTML;
+    if (event.currentTarget.innerHTML.length > 50) {
+          alert("Title cannot exceed 50 characters");
+          event.currentTarget.innerHTML = oldTitle;
+    } 
+    else {
+      setOldTitle(event.currentTarget.innerHTML);
+      selectedNote.title = event.currentTarget.innerHTML;
+    }
   };
 
   const editContentHandler = (event: React.FormEvent<HTMLParagraphElement>) => {
@@ -83,6 +91,16 @@ function App() {
           style={{ backgroundColor: titleBGColor }}
           onFocus={() => setTitleBGColor('#e0f7fa')}
           onBlur={() => setTitleBGColor('')}
+          onInput={(event) => {
+            if (event.currentTarget.value.length > 50) {
+              alert("Title cannot exceed 50 characters");
+              event.currentTarget.value = oldTitle;
+            } 
+            else {
+              setOldTitle(event.currentTarget.value);
+              selectedNote.title = event.currentTarget.value;
+            }
+          }}
         	onChange={(event) =>
           	setCreateNote({ ...createNote, title: event.target.value })} required >
       	</input>
@@ -134,7 +152,7 @@ function App() {
                 notes={notes} setNotes={setNotes}/>
            </div>
            <h2 contentEditable="true"
-              onFocus={() => setSelectedNote(note)}
+              onFocus={() => {setSelectedNote(note); setOldTitle(note.title);}}
               onInput={editTitleHandler}
               onBlur={handleTitleBlur}
             > {note.title} </h2>
