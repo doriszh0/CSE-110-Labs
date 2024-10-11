@@ -36,12 +36,14 @@ function App() {
   const [selectedNote, setSelectedNote] = useState<Note>(initialNote)
 
   const editTitleHandler = (event: React.FormEvent<HTMLHeadingElement>) => {
+    if (event.currentTarget.innerHTML.length == 50 && oldTitle.length < 50) {
+      setOldTitle(event.currentTarget.innerHTML);
+    }
     if (event.currentTarget.innerHTML.length > 50) {
           alert("Title cannot exceed 50 characters");
           event.currentTarget.innerHTML = oldTitle;
     } 
     else {
-      setOldTitle(event.currentTarget.innerHTML);
       selectedNote.title = event.currentTarget.innerHTML;
     }
   };
@@ -98,7 +100,6 @@ function App() {
             } 
             else {
               setOldTitle(event.currentTarget.value);
-              selectedNote.title = event.currentTarget.value;
             }
           }}
         	onChange={(event) =>
